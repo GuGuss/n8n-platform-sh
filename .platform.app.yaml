@@ -7,7 +7,12 @@
 name: app
 
 # The runtime the application uses.
-type: nodejs:14
+type: nodejs:16
+
+dependencies:
+    nodejs:
+        yarn: "1.22.17"
+        n8n: "^0.176.0"
 
 # The relationships of the application with services or other applications.
 #
@@ -20,12 +25,15 @@ relationships:
 # The configuration of app when it is exposed to the web.
 web:
   commands:
-   start: "node index.js"
+    start: "N8N_PORT=$PORT n8n"
 
 # The size of the persistent disk of the application (in MB).
-disk: 512
+disk: 1024
 
 mounts:
+    '.n8n':
+        source: local
+        source_path: .n8n
     'run':
         source: local
         source_path: run
